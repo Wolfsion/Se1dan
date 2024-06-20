@@ -1,7 +1,7 @@
-# Se1dan
 <p align="center">
   <br>
-  <a href="https://github.com/Wolfsion/Se1dan"><img src="./seidan.jpg" width="400" alt="Se1dan"/></a>
+  <a href="https://github.com/Wolfsion/Se1dan">
+  <img src="./seidan.jpg" width="400" alt="Se1dan" style="border-radius: 45%; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);"/></a>
   <br>
 </p>
   <p align="center">
