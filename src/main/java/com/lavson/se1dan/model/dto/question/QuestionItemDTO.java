@@ -30,9 +30,21 @@ public class QuestionItemDTO {
     @AllArgsConstructor
     @Builder
     public static class Option {
+        /**
+         * 测评类使用的分类属性
+         */
         private String result;
+        /**
+         * 得分类使用的计分属性
+         */
         private int score;
+        /**
+         * 用户选项描述，给人看的
+         */
         private String value;
+        /**
+         * 用户选项键，给机器用的
+         */
         private String key;
     }
 }
