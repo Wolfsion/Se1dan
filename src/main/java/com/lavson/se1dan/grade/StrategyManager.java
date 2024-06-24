@@ -5,10 +5,12 @@ import com.lavson.se1dan.common.ErrorCode;
 import com.lavson.se1dan.exception.BusinessException;
 import com.lavson.se1dan.model.entity.App;
 import com.lavson.se1dan.model.entity.UserAnswer;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Service
 public class StrategyManager {
     // 策略列表
     @Resource

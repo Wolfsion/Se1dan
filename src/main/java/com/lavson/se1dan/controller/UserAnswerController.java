@@ -10,6 +10,7 @@ import com.lavson.se1dan.common.ResultUtils;
 import com.lavson.se1dan.constant.UserConstant;
 import com.lavson.se1dan.exception.BusinessException;
 import com.lavson.se1dan.exception.ThrowUtils;
+import com.lavson.se1dan.grade.StrategyManager;
 import com.lavson.se1dan.model.dto.userAnswer.UserAnswerAddRequest;
 import com.lavson.se1dan.model.dto.userAnswer.UserAnswerEditRequest;
 import com.lavson.se1dan.model.dto.userAnswer.UserAnswerQueryRequest;
@@ -49,6 +50,9 @@ public class UserAnswerController {
     @Resource
     private AppService appService;
 
+    @Resource
+    private StrategyManager strategyManager;
+
     // region 增删改查
 
     /**
@@ -79,6 +83,16 @@ public class UserAnswerController {
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         // 返回新写入的数据 id
         long newUserAnswerId = userAnswer.getId();
+
+        try {
+            UserAnswer userAnswerWithResult = strategyManager.doGrade(choices, app);
+            userAnswerWithResult.setId(newUserAnswerId);
+            userAnswerService.updateById(userAnswerWithResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "判题错误");
+        }
+
         return ResultUtils.success(newUserAnswerId);
     }
 

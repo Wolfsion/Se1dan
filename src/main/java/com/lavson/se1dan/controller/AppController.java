@@ -168,6 +168,8 @@ public class AppController {
         long size = appQueryRequest.getPageSize();
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        // 只能看到过审应用
+        appQueryRequest.setReviewStatus(ReviewStatusEnum.PASS.getValue());
         // 查询数据库
         Page<App> appPage = appService.page(new Page<>(current, size),
                 appService.getQueryWrapper(appQueryRequest));
@@ -235,7 +237,7 @@ public class AppController {
 
     @PostMapping("/review")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Boolean> doAppReview(@RequestBody ReviewRequest reviewRequest, HttpServletRequest request) {
+    public BaseResponse<Boolean> reviewApp(@RequestBody ReviewRequest reviewRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(reviewRequest == null, ErrorCode.PARAMS_ERROR);
         Long id = reviewRequest.getId();
         Integer reviewStatus = reviewRequest.getReviewStatus();
@@ -256,6 +258,7 @@ public class AppController {
         App app = new App();
         app.setId(id);
         app.setReviewStatus(reviewStatus);
+        app.setReviewMessage(reviewRequest.getReviewMessage());
         app.setReviewerId(loginUser.getId());
         app.setReviewTime(new Date());
         boolean result = appService.updateById(app);

@@ -116,6 +116,7 @@ public class AppVO implements Serializable {
             return null;
         }
         AppVO appVO = new AppVO();
+        BeanUtils.copyProperties(app, appVO);
         return appVO;
     }
 }

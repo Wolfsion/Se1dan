@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lavson.se1dan.common.ErrorCode;
 import com.lavson.se1dan.constant.CommonConstant;
+import com.lavson.se1dan.constant.ContentLengthConstant;
 import com.lavson.se1dan.exception.ThrowUtils;
 import com.lavson.se1dan.mapper.ScoringResultMapper;
 import com.lavson.se1dan.model.dto.scoringResult.ScoringResultQueryRequest;
@@ -59,14 +60,15 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
 
         // 创建数据时，参数不能为空
         if (add) {
-            // 补充校验规则
+            // giot 补充校验规则
             ThrowUtils.throwIf(StringUtils.isBlank(resultName), ErrorCode.PARAMS_ERROR, "结果名不能为空");
             ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "appId 非法");
         }
         // 修改数据时，有参数则校验
         // 补充校验规则
         if (StringUtils.isNotBlank(resultName)) {
-            ThrowUtils.throwIf(resultName.length() > 128, ErrorCode.PARAMS_ERROR, "标题过长");
+            ThrowUtils.throwIf(resultName.length() > ContentLengthConstant.RESULT_NAME_LENGTH_LIMIT,
+                    ErrorCode.PARAMS_ERROR, "标题过长");
         }
 
         if (appId != null) {

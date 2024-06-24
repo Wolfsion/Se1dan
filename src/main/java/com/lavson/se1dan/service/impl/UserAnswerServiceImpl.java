@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lavson.se1dan.common.ErrorCode;
 import com.lavson.se1dan.constant.CommonConstant;
+import com.lavson.se1dan.exception.BusinessException;
 import com.lavson.se1dan.exception.ThrowUtils;
 import com.lavson.se1dan.mapper.UserAnswerMapper;
 import com.lavson.se1dan.model.dto.userAnswer.UserAnswerQueryRequest;
 import com.lavson.se1dan.model.entity.App;
 import com.lavson.se1dan.model.entity.UserAnswer;
 import com.lavson.se1dan.model.entity.User;
+import com.lavson.se1dan.model.enums.ReviewStatusEnum;
 import com.lavson.se1dan.model.vo.UserAnswerVO;
 import com.lavson.se1dan.model.vo.UserVO;
 import com.lavson.se1dan.service.AppService;
@@ -58,6 +60,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         ThrowUtils.throwIf(userAnswer == null, ErrorCode.PARAMS_ERROR);
         // 从对象中取值
         Long appId = userAnswer.getAppId();
+        // todo: 校验用户答案必须和题量一致，如果没有答完全，前端填充一个默认值
         // 创建数据时，参数不能为空
         if (add) {
             // 补充校验规则
@@ -68,6 +71,9 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         if (appId != null) {
             App app = appService.getById(appId);
             ThrowUtils.throwIf(app == null, ErrorCode.PARAMS_ERROR, "应用不存在");
+            if (!ReviewStatusEnum.PASS.equals(ReviewStatusEnum.getEnumByValue(app.getReviewStatus()))) {
+                throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "应用未过审，无法答题");
+            }
         }
     }
 

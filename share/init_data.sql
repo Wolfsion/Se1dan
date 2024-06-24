@@ -6,9 +6,9 @@ INSERT INTO user (id, userAccount, userPassword, unionId, mpOpenId, userName, us
                   createTime, updateTime, isDelete)
 -- lavson: qop909@a
 -- jison: qop909@q
-VALUES (1803754262283419650, 'lavson', 'c58a3b14885cfeed3e053e5c02cd3cef', null, null, '苏云', null,
+VALUES (1, 'lavson', 'c58a3b14885cfeed3e053e5c02cd3cef', null, null, '苏云', null,
         '苏云不知云', 'admin', '2024-05-09 11:13:13', '2024-05-09 15:07:48', 0),
-       (1803754262283419651, 'jison', 'c4de37aad9b783ec3ada3128e771708a', null, null, '苏云', null,
+       (2, 'jison', 'c4de37aad9b783ec3ada3128e771708a', null, null, '苏云', null,
         '苏云不知云', 'user', '2024-05-09 11:13:14', '2024-05-09 15:07:49', 0);
 
 -- 应用表初始数据

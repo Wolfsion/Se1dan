@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lavson.se1dan.common.ErrorCode;
 import com.lavson.se1dan.constant.CommonConstant;
+import com.lavson.se1dan.constant.ContentLengthConstant;
 import com.lavson.se1dan.exception.ThrowUtils;
 import com.lavson.se1dan.mapper.AppMapper;
 import com.lavson.se1dan.model.dto.app.AppQueryRequest;
@@ -68,7 +69,8 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         }
         // 修改数据时，有参数则校验
         if (StringUtils.isNotBlank(appName)) {
-            ThrowUtils.throwIf(appName.length() > 80, ErrorCode.PARAMS_ERROR, "应用名称要小于 80");
+            ThrowUtils.throwIf(appName.length() > ContentLengthConstant.APP_NAME_LENGTH_LIMIT,
+                    ErrorCode.PARAMS_ERROR, "应用名称要小于 80");
         }
 
         if (reviewStatus != null) {
@@ -170,9 +172,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
             return appVOPage;
         }
         // 对象列表 => 封装对象列表
-        List<AppVO> appVOList = appList.stream().map(app -> {
-            return AppVO.objToVo(app);
-        }).collect(Collectors.toList());
+        List<AppVO> appVOList = appList.stream().map(AppVO::objToVo).collect(Collectors.toList());
 
         // 可以根据需要为封装对象补充值，不需要的内容可以删除
         // region 可选
