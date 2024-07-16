@@ -1,0 +1,21 @@
+# 测试配置文件
+# @author <a href="https://github.com/Wolfsion/">苏云</a>
+# @from <a href="https://www.zhihu.com/people/dla-44-95">苏云不知云</a>
+server:
+  port: 8101
+spring:
+  # 数据库配置
+  # todo 需替换配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/se1dan
+    username: root
+    password: qop909
+  # Redis 配置
+  # todo 需替换配置
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    timeout: 5000
+    password: 123456
