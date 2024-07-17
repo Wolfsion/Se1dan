@@ -8,11 +8,8 @@ RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo Asia/Shangh
 
 # Copy local code to the container image.
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-
-# Build a release artifact.
-RUN mvn package -DskipTests
+COPY target/se1dan-0.0.1-SNAPSHOT.jar /app/target/se1dan-0.0.1-SNAPSHOT.jar
 
 # Run the web service on container startup.
-CMD ["java","-jar","/app/target/se1dan-0.0.1-SNAPSHOT.jar","--spring.profiles.active=prod"]
+# java -jar se1dan-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+CMD ["java","-jar","/app/target/se1dan-0.0.1-SNAPSHOT.jar","--spring.profiles.active=docker"]

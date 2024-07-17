@@ -16,6 +16,7 @@ public class RedissonConfig {
     private String port;
     private String database;
     private String password;
+    private Integer timeout;
 
     @Bean
     public RedissonClient redissonClient() {
@@ -23,7 +24,8 @@ public class RedissonConfig {
         config.useSingleServer()
                 .setAddress("redis://" + host + ":" + port)
                 .setDatabase(Integer.parseInt(database))
-                .setPassword(password);
+                .setPassword(password)
+                .setTimeout(timeout);
         return Redisson.create(config);
     }
 }

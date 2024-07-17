@@ -148,4 +148,5 @@ fabric.properties
 # LA
 DEV.md
 application-prod.yml
+application-docker.yml
 init_data_prod.sql
